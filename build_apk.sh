@@ -32,8 +32,18 @@ sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
 
 # Check if gradlew exists, download if not
 if [ ! -f "./gradlew" ]; then
-    echo "Gradle wrapper not found. Downloading..."
-    ./gradlew wrapper --gradle-version 7.4.2
+    echo "Gradle wrapper not found. Setting up Gradle wrapper..."
+
+    # Download and install Gradle manually
+    wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip
+    unzip gradle-7.4.2-bin.zip
+    export PATH=$PWD/gradle-7.4.2/bin:$PATH
+
+    # Generate the Gradle wrapper
+    gradle wrapper
+
+    # Clean up the downloaded Gradle zip
+    rm -rf gradle-7.4.2 gradle-7.4.2-bin.zip
 fi
 
 # Make gradlew executable
